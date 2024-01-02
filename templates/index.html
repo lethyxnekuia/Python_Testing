@@ -9,6 +9,9 @@
     Please enter your secretary email to continue:
     <form action="showSummary" method="post">
         <label for="email">Email:</label>
+        {% if email_not_found %}
+            <span>"Sorry, that email wasn't found.</span>
+        {% endif %}  
         <input type="email" name="email" id=""/>
         <button type="submit">Enter</button>
     </form>
