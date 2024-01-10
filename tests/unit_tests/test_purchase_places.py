@@ -16,7 +16,7 @@ class TestPurchasePlaces:
         assert message.encode("utf-8") in response.data
 
 
-    def test_failure_purchase_places_2(self,
+    def test_failure_purchase_more_places_than_points(self,
                                   fixture_load_clubs,
                                   fixture_load_competitions):
 
@@ -25,5 +25,15 @@ class TestPurchasePlaces:
                                                            competition=test_dict["competition"],
                                                            places="100"))
         message = "You have not enough points."
+        assert message.encode("utf-8") in response.data
+
+    def test_failure_purchase_more_than_twelves_places(self,
+                                  fixture_load_clubs,
+                                  fixture_load_competitions):
+        response = app.test_client().post('/purchasePlaces',
+                                                 data=dict(club=test_dict["name"],
+                                                           competition=test_dict["competition"],
+                                                           places="13"))
+        message = "You can not book more than 12 places"
         assert message.encode("utf-8") in response.data
 
