@@ -30,7 +30,7 @@ def mock_load_competitions():
     list_of_competitions = [
         {
             "name": "Spring Festival",
-            "date": "2022-03-27 10:00:00",
+            "date": "2024-03-27 10:00:00",
             "numberOfPlaces": "25"
         },
         {
@@ -52,7 +52,7 @@ test_dict = {
     "email": "johnsteed@hotmail.com",
     "points": "50",
     "competition": "Spring Festival",
-    "date": "2022-03-27 10:00:00",
+    "date": "2024-03-27 10:00:00",
     "numberOfPlaces": "25",
     "bookedPlaces": "2"
 }

@@ -37,3 +37,13 @@ class TestPurchasePlaces:
         message = "You can not book more than 12 places"
         assert message.encode("utf-8") in response.data
 
+    def test_failure_purchase_old_event(self,
+                                  fixture_load_clubs,
+                                  fixture_load_competitions):
+        response = app.test_client().post('/purchasePlaces',
+                                                 data=dict(club=test_dict["name"],
+                                                           competition="Fall Classic",
+                                                           places="1"))
+        message = "This event has passed"
+        assert message.encode("utf-8") in response.data
+
