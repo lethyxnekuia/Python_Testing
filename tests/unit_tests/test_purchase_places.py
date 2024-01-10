@@ -24,6 +24,6 @@ class TestPurchasePlaces:
                                                  data=dict(club=test_dict["name"],
                                                            competition=test_dict["competition"],
                                                            places="100"))
-        message = "You don't have enough points."
+        message = "You have not enough points."
         assert message.encode("utf-8") in response.data
 
