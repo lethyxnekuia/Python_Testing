@@ -4,7 +4,7 @@ def mock_load_clubs():
     list_of_clubs = [
         {
             "name": "Face Lift",
-            "email": "johnsteed@hotmail.com",
+            "email": "john@simplylift.co",
             "points": "50"
         },
         {
@@ -49,7 +49,7 @@ def fixture_load_competitions(monkeypatch):
 
 test_dict = {
     "name": "Face Lift",
-    "email": "johnsteed@hotmail.com",
+    "email": "john@simplylift.co",
     "points": "50",
     "competition": "Spring Festival",
     "date": "2024-03-27 10:00:00",

@@ -6,7 +6,7 @@ class TestShowSummary:
     def test_success_show_summary(self,
                                   fixture_load_clubs,
                                   fixture_load_competitions):
-        email = "johnsteed@hotmail.com"
+        email = "john@simplylift.co"
         response = app.test_client().post('/showSummary',
                                                  data=dict(email=email))
         assert response.status_code == 200
