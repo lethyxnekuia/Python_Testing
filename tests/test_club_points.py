@@ -1,8 +1,8 @@
-from ... import server
-from ..fixtures import mock_load_clubs, fixture_load_clubs
+from .. import server
+from .conftest import mock_load_clubs
 
 class TestClubsPoints:
-    def test_clubs_points(self, fixture_load_clubs):
+    def test_clubs_points(client):
 
         response = server.app.test_client().get('/clubsPoints')
         assert response.status_code == 200

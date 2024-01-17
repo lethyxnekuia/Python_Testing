@@ -1,11 +1,8 @@
-from ...server import app
-from ..fixtures import fixture_load_clubs, fixture_load_competitions
+from ..server import app
 
 
 class TestShowSummary:
-    def test_success_show_summary(self,
-                                  fixture_load_clubs,
-                                  fixture_load_competitions):
+    def test_success_show_summary(client):
         email = "john@simplylift.co"
         response = app.test_client().post('/showSummary',
                                                  data=dict(email=email))
