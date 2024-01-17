@@ -14,6 +14,12 @@ class TestPurchasePlaces:
         assert response.status_code == 200
         message = "Great-booking complete!"
         assert message.encode("utf-8") in response.data
+        remaining_clubs_points = int(test_dict["points"]) - int(test_dict["bookedPlaces"])
+        remaining_clubs_points = "Points available: " + str(remaining_clubs_points)
+        assert remaining_clubs_points.encode("utf-8") in response.data
+        remaining_competition_places = int(test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"])
+        remaining_competition_places = "Number of Places: " + str(remaining_competition_places)
+        assert remaining_competition_places.encode("utf-8") in response.data
 
 
     def test_failure_purchase_more_places_than_points(self,
