@@ -1,4 +1,4 @@
-import pytest 
+import pytest
 from ..server import app
 
 test_dict = {
@@ -13,47 +13,82 @@ test_dict = {
 
 
 class TestPurchasePlaces:
-    @pytest.mark.usefixtures("fixture_load_clubs", "fixture_load_competitions", "client")
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
     def test_success_purchase_places(client):
 
-        response = app.test_client().post('/purchasePlaces',
-                                                 data=dict(club=test_dict["name"],
-                                                           competition=test_dict["competition"],
-                                                           places=test_dict["bookedPlaces"]))
+        response = app.test_client().post(
+            '/purchasePlaces',
+            data=dict(
+                club=test_dict["name"],
+                competition=test_dict["competition"],
+                places=test_dict["bookedPlaces"]
+            )
+        )
         assert response.status_code == 200
         message = "Great-booking complete!"
         assert message.encode("utf-8") in response.data
-        remaining_clubs_points = int(test_dict["points"]) - int(test_dict["bookedPlaces"])
-        remaining_clubs_points = "Points available: " + str(remaining_clubs_points)
+        clubs_points = int(
+            test_dict["points"]) - int(test_dict["bookedPlaces"])
+        clubs_points = "Points available: " + str(clubs_points)
         print(response.data)
-        assert remaining_clubs_points.encode("utf-8") in response.data
-        remaining_competition_places = int(test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"])
-        remaining_competition_places = "Number of Places: " + str(remaining_competition_places)
-        assert remaining_competition_places.encode("utf-8") in response.data
+        assert clubs_points.encode("utf-8") in response.data
+        competition_places = int(
+            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"])
+        competition_places = "Number of Places: " + str(competition_places)
+        assert competition_places.encode("utf-8") in response.data
 
-
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
     def test_failure_purchase_more_places_than_points(client):
 
-        response = app.test_client().post('/purchasePlaces',
-                                                 data=dict(club=test_dict["name"],
-                                                           competition=test_dict["competition"],
-                                                           places="100"))
+        response = app.test_client().post(
+            '/purchasePlaces',
+            data=dict(
+                club=test_dict["name"],
+                competition=test_dict["competition"],
+                places="100"
+            )
+        )
         message = "You have not enough points."
         assert message.encode("utf-8") in response.data
 
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
     def test_failure_purchase_more_than_twelves_places(client):
-        response = app.test_client().post('/purchasePlaces',
-                                                 data=dict(club=test_dict["name"],
-                                                           competition=test_dict["competition"],
-                                                           places="13"))
+        response = app.test_client().post(
+            '/purchasePlaces',
+            data=dict(
+                club=test_dict["name"],
+                competition=test_dict["competition"],
+                places="13"
+                )
+            )
         message = "You can not book more than 12 places"
         assert message.encode("utf-8") in response.data
 
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
     def test_failure_purchase_old_event(client):
-        response = app.test_client().post('/purchasePlaces',
-                                                 data=dict(club=test_dict["name"],
-                                                           competition="Fall Classic",
-                                                           places="1"))
+        response = app.test_client().post(
+            '/purchasePlaces',
+            data=dict(
+                club=test_dict["name"],
+                competition="Fall Classic",
+                places="1"
+                )
+            )
         message = "This event has passed"
         assert message.encode("utf-8") in response.data
-

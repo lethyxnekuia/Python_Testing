@@ -1,5 +1,6 @@
 import pytest
-from Python_Testing.server import app  
+from Python_Testing.server import app
+
 
 def mock_load_clubs():
     list_of_clubs = [
@@ -21,9 +22,11 @@ def mock_load_clubs():
     ]
     return list_of_clubs
 
+
 @pytest.fixture
 def fixture_load_clubs(monkeypatch):
     monkeypatch.setattr('Python_Testing.server.clubs', mock_load_clubs())
+
 
 def mock_load_competitions():
     list_of_competitions = [
@@ -40,9 +43,14 @@ def mock_load_competitions():
     ]
     return list_of_competitions
 
+
 @pytest.fixture
 def fixture_load_competitions(monkeypatch):
-    monkeypatch.setattr('Python_Testing.server.competitions', mock_load_competitions())
+    monkeypatch.setattr(
+        'Python_Testing.server.competitions',
+        mock_load_competitions()
+    )
+
 
 @pytest.fixture
 def client(fixture_load_clubs, fixture_load_competitions, monkeypatch):
