@@ -1,6 +1,6 @@
 import pytest
-from .. import server
-from .conftest import mock_load_clubs
+from ... import server
+from ..conftest import mock_load_clubs
 
 
 class TestClubsPoints:

@@ -1,5 +1,5 @@
 import pytest
-from ..server import app
+from ...server import app
 
 test_dict = {
     "name": "Face Lift",
@@ -34,7 +34,6 @@ class TestPurchasePlaces:
         clubs_points = int(
             test_dict["points"]) - int(test_dict["bookedPlaces"])
         clubs_points = "Points available: " + str(clubs_points)
-        print(response.data)
         assert clubs_points.encode("utf-8") in response.data
         competition_places = int(
             test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"])
