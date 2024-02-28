@@ -1,5 +1,5 @@
 import pytest
-from ..server import app
+from ...server import app
 
 
 test_dict = {
@@ -19,7 +19,7 @@ class TestIntegration:
         "fixture_load_competitions",
         "client"
     )
-    def test_integration(client):
+    def test_integration_connexion(client):
         # Try to connect with an unknown email
         response = app.test_client()
         assert response.post(
@@ -35,6 +35,14 @@ class TestIntegration:
         )
         assert response.status_code == 200
         assert f"Welcome, {email}".encode("utf-8") in response.data
+
+
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
+    def test_integration_get_tickets(client):
 
         # Try to get 2 tickets
         response = app.test_client().post(
@@ -93,14 +101,13 @@ class TestIntegration:
         message = "This event has passed"
         assert message.encode("utf-8") in response.data
 
-        # another person try to connect
-        email = "admin@irontemple.com"
-        response = app.test_client().post(
-            '/showSummary',
-            data=dict(email=email)
-        )
-        assert response.status_code == 200
-        assert f"Welcome, {email}".encode("utf-8") in response.data
+
+    @pytest.mark.usefixtures(
+        "fixture_load_clubs",
+        "fixture_load_competitions",
+        "client"
+    )
+    def test_integration_get_tickets_two(client):
 
         # Try to get 5 tickets
         response = app.test_client().post(
@@ -130,7 +137,7 @@ class TestIntegration:
         clubs_points = "Points available: " + str(clubs_points)
         assert clubs_points.encode("utf-8") in response.data
         competition_places = int(
-            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"]) - 2
+            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"])
         competition_places = "Number of Places: " + str(competition_places)
         assert competition_places.encode("utf-8") in response.data
 
@@ -162,11 +169,11 @@ class TestIntegration:
         clubs_points = "Points available: " + str(clubs_points)
         assert clubs_points.encode("utf-8") in response.data
         competition_places = int(
-            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"]) - 4
+            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"]) - 2
         competition_places = "Number of Places: " + str(competition_places)
         assert competition_places.encode("utf-8") in response.data
 
-        # the first User try to get 2 more tickets
+        # the other User try to get 2 more tickets
         response = app.test_client().post(
             '/purchasePlaces',
             data=dict(
@@ -179,10 +186,10 @@ class TestIntegration:
         message = "Great-booking complete!"
         assert message.encode("utf-8") in response.data
         clubs_points = int(
-            test_dict["points"]) - int(test_dict["bookedPlaces"]) - 2
+            test_dict["points"]) - int(test_dict["bookedPlaces"]) 
         clubs_points = "Points available: " + str(clubs_points)
         assert clubs_points.encode("utf-8") in response.data
         competition_places = int(
-            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"]) - 6
+            test_dict["numberOfPlaces"]) - int(test_dict["bookedPlaces"]) - 4
         competition_places = "Number of Places: " + str(competition_places)
         assert competition_places.encode("utf-8") in response.data
